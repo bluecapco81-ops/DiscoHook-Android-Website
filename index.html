@@ -1,298 +1,116 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DiscoHook Android</title>
-<style>
-:root {
-    --bg-color-dark: #2c2f33;
-    --bg-color-light: #f5f5f5;
-    --text-color-dark: #ffffff;
-    --text-color-light: #000000;
-    --accent-gradient: linear-gradient(90deg, #7289da, #4b6cb7);
-}
-
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color-dark);
-    color: var(--text-color-dark);
-    transition: all 0.3s ease;
-    line-height: 1.6;
-    font-size: 18px;
-}
-
-.header {
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: rgba(35, 39, 42, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(5px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 100;
-    transition: background-color 0.3s ease;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 2em;
-    color: #7289da;
-}
-
-.theme-toggle {
-    cursor: pointer;
-    font-size: 1.5em;
-}
-
-.content {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 0 20px;
-}
-
-.download-btn {
-    display: inline-block;
-    padding: 20px 40px;
-    background: var(--accent-gradient);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    margin: 20px 0;
-    box-shadow: 0 4px 15px rgba(114, 137, 218, 0.6);
-}
-
-.download-btn:hover {
-    box-shadow: 0 8px 25px rgba(114, 137, 218, 0.8);
-    transform: translateY(-2px);
-}
-
-.buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
-
-.discord-btn {
-    display: inline-block;
-    padding: 20px 40px;
-    background: #7289da;
-    color: white;
-    border-radius: 10px;
-    font-size: 1.5em;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(114, 137, 218, 0.6);
-}
-
-.discord-btn:hover {
-    box-shadow: 0 8px 25px rgba(114, 137, 218, 0.8);
-    transform: translateY(-2px);
-}
-
-/* Светлая тема */
-body.light {
-    background-color: var(--bg-color-light);
-    color: var(--text-color-light);
-}
-body.light .header {
-    background-color: rgba(224, 224, 224, 0.8);
-}
-body.light .download-btn {
-    background: linear-gradient(90deg, #5865f2, #4752c4);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.6);
-}
-body.light .discord-btn {
-    background: #5865f2;
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.6);
-}
-
-/* Плавный скролл */
-html {
-    scroll-behavior: smooth;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiscoHook Android</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #2c2f33;
+      color: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background-color: #f5f5f5;
+      color: #222;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(44, 47, 51, 0.8);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    body.light .header {
+      background: rgba(245, 245, 245, 0.8);
+    }
+    h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .content {
+      padding: 20px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .download-btn {
+      padding: 12px 20px;
+      background: linear-gradient(90deg, #5865f2, #4e5bd5);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 0 12px rgba(88, 101, 242, 0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 18px rgba(88, 101, 242, 0.9);
+    }
+    .discord-btn {
+      padding: 12px 20px;
+      background: #5865f2;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .discord-btn:hover {
+      background: #4752c4;
+      transform: translateY(-3px);
+    }
+  </style>
 </head>
 <body>
-<div class="header">
+  <div class="header">
     <h1>DiscoHook Android</h1>
     <span class="theme-toggle" id="themeToggle">🌙</span>
-</div>
+  </div>
 
-<div class="content">
-    <p>
-Это неофициальное приложение, которое представляет собой простую WebView-оболочку для сайта DiscoHook.org.
-    </p>
-    <p>
-Все возможности сервиса полностью загружаются из оригинального сайта.
-    </p>
-    <p>
-Я не являюсь разработчиком DiscoHook. Все права на сервис принадлежат их авторам. Моё приложение лишь облегчает доступ к сайту через удобный интерфейс без необходимости открывать браузер.
-    </p>
-    <p>
-<b>Особенности:</b>
-    </p>
+  <div class="content">
+    <p><b>Это неофициальное приложение</b>, которое представляет собой простую WebView-оболочку для сайта <a href="https://discohook.org" target="_blank">DiscoHook.org</a>.</p>
+    <p>Все возможности сервиса полностью загружаются из оригинального сайта.</p>
+    <p><b>Я не являюсь разработчиком DiscoHook.</b> Все права на сервис принадлежат их авторам. Моё приложение лишь облегчает доступ к сайту через удобный интерфейс без необходимости открывать браузер.</p>
+
+    <h3>Особенности:</h3>
     <ul>
-        <li>Лёгкий запуск DiscoHook через отдельное приложение.</li>
-        <li>Быстрая загрузка без лишних вкладок браузера.</li>
-        <li>Полный функционал сайта внутри WebView.</li>
+      <li>Лёгкий запуск DiscoHook через отдельное приложение.</li>
+      <li>Быстрая загрузка без лишних вкладок браузера.</li>
+      <li>Полный функционал сайта внутри WebView.</li>
     </ul>
-    <p>
-⚠️ Внимание: Для работы требуется интернет.<br>
-💡 Приложение сделано «как есть», обновления зависят от изменений на сайте DiscoHook.
-    </p>
+
+    <p>⚠️ <b>Внимание:</b> Для работы требуется интернет.<br>
+    💡 Приложение сделано «как есть», обновления зависят от изменений на сайте DiscoHook.</p>
 
     <div class="buttons">
-        <a href="https://github.com/bluecapco81-ops/DiscoHook-Android-Website/releases/download/Android/DiscoHook-Android.apk" class="download-btn">📥 Скачать APK</a>
-        <a href="https://discord.gg/KWeNRdmx" target="_blank" class="discord-btn">Сервер Discord</a>
+      <a href="https://github.com/bluecapco81-ops/DiscoHook-Android-Website/releases/download/Android/DiscoHook-Android.apk" class="download-btn">📥 Скачать APK</a>
+      <a href="https://discord.gg/KWeNRdmx" target="_blank" class="discord-btn">💬 Сервер Discord</a>
     </div>
-</div>
+  </div>
 
-<script>
-const toggle = document.getElementById('themeToggle');
-toggle.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
-});
-</script>
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    });
+  </script>
 </body>
-</html>    z-index: 100;
-    transition: background-color 0.3s ease;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 2em;
-    color: #7289da;
-}
-
-.theme-toggle {
-    cursor: pointer;
-    font-size: 1.5em;
-}
-
-.content {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 0 20px;
-}
-
-.download-btn {
-    display: inline-block;
-    padding: 20px 40px;
-    background: var(--accent-gradient);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    margin: 20px 0;
-    box-shadow: 0 4px 15px rgba(114, 137, 218, 0.6);
-}
-
-.download-btn:hover {
-    box-shadow: 0 8px 25px rgba(114, 137, 218, 0.8);
-    transform: translateY(-2px);
-}
-
-.buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
-
-.discord-btn {
-    display: inline-block;
-    padding: 20px 40px;
-    background: #7289da;
-    color: white;
-    border-radius: 10px;
-    font-size: 1.5em;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(114, 137, 218, 0.6);
-}
-
-.discord-btn:hover {
-    box-shadow: 0 8px 25px rgba(114, 137, 218, 0.8);
-    transform: translateY(-2px);
-}
-
-/* Светлая тема */
-body.light {
-    background-color: var(--bg-color-light);
-    color: var(--text-color-light);
-}
-body.light .header {
-    background-color: rgba(224, 224, 224, 0.8);
-}
-body.light .download-btn {
-    background: linear-gradient(90deg, #5865f2, #4752c4);
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.6);
-}
-body.light .discord-btn {
-    background: #5865f2;
-    box-shadow: 0 4px 15px rgba(88, 101, 242, 0.6);
-}
-
-/* Плавный скролл */
-html {
-    scroll-behavior: smooth;
-}
-</style>
-</head>
-<body>
-<div class="header">
-    <h1>DiscoHook Android</h1>
-    <span class="theme-toggle" id="themeToggle">🌙</span>
-</div>
-
-<div class="content">
-    <p>
-Это неофициальное приложение, которое представляет собой простую WebView-оболочку для сайта DiscoHook.org.
-    </p>
-    <p>
-Все возможности сервиса полностью загружаются из оригинального сайта.
-    </p>
-    <p>
-Я не являюсь разработчиком DiscoHook. Все права на сервис принадлежат их авторам. Моё приложение лишь облегчает доступ к сайту через удобный интерфейс без необходимости открывать браузер.
-    </p>
-    <p>
-<b>Особенности:</b>
-    </p>
-    <ul>
-        <li>Лёгкий запуск DiscoHook через отдельное приложение.</li>
-        <li>Быстрая загрузка без лишних вкладок браузера.</li>
-        <li>Полный функционал сайта внутри WebView.</li>
-    </ul>
-    <p>
-⚠️ Внимание: Для работы требуется интернет.<br>
-💡 Приложение сделано «как есть», обновления зависят от изменений на сайте DiscoHook.
-    </p>
-
-    <div class="buttons">
-        <a href="DiscoHook-Android.apk" class="download-btn">Скачать</a>
-        <a href="https://discord.gg/KWeNRdmx" target="_blank" class="discord-btn">Сервер Discord</a>
-    </div>
-</div>
-
-<script>
-const toggle = document.getElementById('themeToggle');
-toggle.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
-});
-</script>
-</body>
+</html>
